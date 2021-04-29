@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const controller = require('../controllers');
-
+const middleware = require('../middlewares');
 
 // Sign up page
 router.post('/signup',(req,res)=>{
@@ -22,12 +22,13 @@ router.get('/isConnected',(req,res) => {
     controller.isConnected(req, res);
 });
 
-// Check if username exists
-router.get('/api/username/:username',(req,res)=>{
+// Protected route : middleware checks if an user is connected
+router.get('/api/username/:username',middleware.authorizeUsersAccess,(req,res)=>{
     controller.getUsername(req,res);
 });
 
-router.get('/api/email/:email',(req,res)=>{
+// Protected route : middleware checks if an user is connected
+router.get('/api/email/:email',middleware.authorizeUsersAccess,(req,res)=>{
     controller.getEMail(req,res);
 });
 
