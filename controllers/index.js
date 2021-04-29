@@ -7,7 +7,7 @@
 
 
 // sign up a new person
-function signUpPerson(req, res) {
+const signUpPerson = (req, res) => {
     const crypto = require('crypto');
     let pass = crypto.createHash('md5').update(req.body.pass).digest("hex");
     const Models = require('../models');
@@ -24,7 +24,7 @@ function signUpPerson(req, res) {
 
 // log in a person
 // return JWT
-function logInPerson(req, res) {
+const logInPerson = (req, res) => {
     const crypto = require('crypto');
     let pass = crypto.createHash('md5').update(req.body.pass).digest("hex");
     const Models = require('../models');
@@ -42,7 +42,7 @@ function logInPerson(req, res) {
 }
 
 // Log Out
-function logOut(req, res) {
+const logOut = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             return console.log(err);
@@ -52,7 +52,7 @@ function logOut(req, res) {
 }
 
 // Check if username exists
-function getUsername(req, res) {
+const getUsername = (req, res) => {
     const Models = require('../models');
     Models.Account.find({username : req.params.username}, function(err, username) {
         if (err) throw err;
@@ -61,7 +61,7 @@ function getUsername(req, res) {
 }
 
 // find email
-function getEMail(req, res) {
+const getEMail = (req, res) => {
     const Models = require('../models');
     Models.Account.find({email : req.params.email}, function(err, email) {
         if (err) throw err;
@@ -70,7 +70,7 @@ function getEMail(req, res) {
 }
 
 // check if a user is connected
-function isConnected(req,res){
+const isConnected = (req,res) => {
     if(req.session.userid){
         res.json({res:true});
     }else{
