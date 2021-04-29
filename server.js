@@ -23,7 +23,7 @@ app.use(routes);
 
 // Session
 app.use(session({
-    secret: 'secret-key',
+    secret: process.env.SECRET_SESSION,
     store: new redisStore({host: process.env.REDIS_IP, port: 6379, client: client, ttl: 86400}),
     saveUninitialized: false,
     resave: false

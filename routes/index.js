@@ -32,6 +32,7 @@ router.get('/api/email/:email',middleware.authorizeUsersAccess,(req,res)=>{
     controller.getEMail(req,res);
 });
 
+// Hello world
 router.get('/',(req,res)=>{
     res.end("welcome in API")
 });
