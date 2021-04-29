@@ -29,7 +29,7 @@ const logInPerson = (req, res) => {
     let pass = crypto.createHash('md5').update(req.body.pass).digest("hex");
     const Models = require('../models');
     //Find user's username and password
-    Models.Account.find({username : req.body.username.toLowerCase(), password : pass},function(err,result) {
+    Models.Account.find({username : req.body.username.toLowerCase(), password : pass},(err,result) => {
         if (err) throw err;
         if (result.length == 1) {
             //req.session.username = req.body.username;
@@ -54,7 +54,7 @@ const logOut = (req, res) => {
 // Check if username exists
 const getUsername = (req, res) => {
     const Models = require('../models');
-    Models.Account.find({username : req.params.username}, function(err, username) {
+    Models.Account.find({username : req.params.username}, (err, username) => {
         if (err) throw err;
         res.json(username);
     });
@@ -63,7 +63,7 @@ const getUsername = (req, res) => {
 // find email
 const getEMail = (req, res) => {
     const Models = require('../models');
-    Models.Account.find({email : req.params.email}, function(err, email) {
+    Models.Account.find({email : req.params.email}, (err, email) =>{
         if (err) throw err;
         res.json(email);
     });
