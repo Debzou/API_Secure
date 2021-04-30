@@ -24,7 +24,7 @@ app.use(routes);
 // Session
 app.use(session({
     secret: process.env.SECRET_SESSION,
-    store: new redisStore({host: process.env.REDIS_IP, port: 6379, client: client, ttl: 86400}),
+    store: new redisStore({host: process.env.REDIS_IP, port: process.env.REDIS_PORT, client: client, ttl: 86400}),
     saveUninitialized: false,
     resave: false
 })); 
@@ -39,8 +39,13 @@ app.listen(process.env.PORT_API,(err)=>{
 
 
 // MongoDB
-database = process.env.URL_MONGO;
-mongoose.connect(database,{useNewUrlParser: true},(err)=> {
+const options = {
+    keepAlive: 1,
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+};
+
+mongoose.connect(process.env.URL_MONGO, options ,(err)=> {
     if (err)
         throw err;
     console.log('Connect to the database');

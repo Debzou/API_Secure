@@ -4,16 +4,17 @@
 // true --> user is connected
 // false --> user is not connected
 // ##########################
-
+const crypto = require('crypto');
 
 // sign up a new person
 const signUpPerson = (req, res) => {
-    const crypto = require('crypto');
-    let pass = crypto.createHash('md5').update(req.body.pass).digest("hex");
+    
+    const pass = crypto.createHash('sha256').update(req.body.password).digest("hex");
     const Models = require('../models');
     const newAccount = Models.Account ({
         username: req.body.username,
         password : pass,
+
         email : req.body.email
     });
     newAccount.save(function(err) {
@@ -25,8 +26,8 @@ const signUpPerson = (req, res) => {
 // log in a person
 // return JWT
 const logInPerson = (req, res) => {
-    const crypto = require('crypto');
-    let pass = crypto.createHash('md5').update(req.body.pass).digest("hex");
+    
+    let pass = crypto.createHash('sha256').update(req.body.password).digest("hex");
     const Models = require('../models');
     //Find user's username and password
     Models.Account.find({username : req.body.username.toLowerCase(), password : pass},(err,result) => {
