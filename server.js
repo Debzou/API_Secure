@@ -16,8 +16,7 @@ const redisStore = require('connect-redis')(session);
 const client = redis.createClient();
 const cors = require('cors');
 
-// using for view
-const path = require('path');
+
 
 // Parser 
 app.use(express.urlencoded({ extended: true }))
@@ -61,8 +60,4 @@ mongoose.connect(process.env.URL_MONGO, options ,(err)=> {
     console.log('Connect to the database');
 });
 
-// Path and Views
-const dirViews = [path.join(__dirname,'./views')];
-app.set('views',dirViews);
-app.set('view engine','ejs');
 

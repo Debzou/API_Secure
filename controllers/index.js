@@ -1,11 +1,14 @@
 
-// ##########################
-// if req.session.userid 
-// true --> user is connected
-// false --> user is not connected
-// ##########################
 const crypto = require('crypto');
 const Models = require('../models');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+
+// This function generate a tokenUser
+function generateAccessToken(username) {
+    return jwt.sign(username, process.env.API_TOKEN, { expiresIn: '1800s' });
+}
 
 // sign up a new person
 const signUpPerson = (req, res) => {
@@ -43,8 +46,8 @@ const logInPerson = (req, res) => {
         if (err) throw err;
         // user exists
         if (result.length == 1) {
-            req.session.userid = result[0]._id;
-            res.json({token : result[0].token, id : result[0]._id,username:result[0].username});
+            const token = generateAccessToken({ username: result[0]._id });
+            res.json({token : token, id : result[0]._id,username:result[0].username});
 
         //
         } else {
@@ -65,43 +68,9 @@ const logOut = (req, res) => {
 
 
 // check if a user is connected
-const isConnected = (req,res) => {
-    if(req.session.userid){
-        res.json({res:true});
-    }else{
-        res.json({res:false});
-    }
+const proveAnthentication = (req,res) => {
+    res.json({response:"You are authenticate"});
 }
-
-// Views
-
-// Home page
-function goToHome(req, res) {
-    res.render('home', {session : req.session});
-}
-
-// Signup page
-function goToSignUp(req, res) {
-    // If the person is already logged in we redirect him to the home page
-    if (req.session.username) {
-        res.redirect('/home');
-        // Else he can sign in
-    } else {
-        res.render('signup', {session : req.session});
-    }
-}
-
-// Login page
-function goToLogIn(req, res) {
-    // If the person is already logged in we redirect him to the home page
-    if (req.session.username) {
-        res.redirect('/home');
-        // Else he can log in
-    } else {
-        res.render('login', {session : req.session});
-    }
-}
-
 
 // export function
 
@@ -109,9 +78,5 @@ function goToLogIn(req, res) {
 module.exports.signUpPerson = signUpPerson;
 module.exports.logInPerson = logInPerson;
 module.exports.logOut = logOut;
-module.exports.isConnected = isConnected;
+module.exports.proveAnthentication = proveAnthentication;
 
-// API views
-module.exports.goToLogIn = goToLogIn;
-module.exports.goToHome = goToHome;
-module.exports.goToSignUp = goToSignUp;

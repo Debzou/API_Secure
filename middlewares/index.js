@@ -1,12 +1,4 @@
-
-// This middleware checks if an user is connected
-const isConnected = (req, res, next) => {
-    if(req.session.userid){
-        next()
-    }else{
-        res.send('ERROR: You must be an connected')
-    }
-}
+const jwt = require('jsonwebtoken');
 
 // Check if username exists
 const isExistingUser = (req, res, next) => {
@@ -38,18 +30,24 @@ const isExistingEmail = (req, res, next) => {
     });
 }
 
-// check if session is activate
-const checksession = (req, res, next) => {
-    console.log(req.session);
-    if(req.session){
-        next()
-    }else{
-        res.send('ERROR: Session is missing')
-    }
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.API_TOKEN, (err, user) => {
+    console.log(err)
+    if (err) return res.sendStatus(403)
+
+    req.user = user
+
+    next()
+  })
 }
 
-module.exports.isConnected = isConnected;
+
 module.exports.isExistingUser = isExistingUser;
 module.exports.isExistingEmail = isExistingEmail;
-module.exports.checksession = checksession;
+module.exports.authenticateToken = authenticateToken;
 
