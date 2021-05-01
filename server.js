@@ -37,7 +37,7 @@ redisClient.on('connect', () => {
 //Configure session middleware
 app.use(session({
     store: new RedisStore({ client: redisClient }),
-    secret: 'secret$%^134',
+    secret: process.env.SECRET_SESSION,
     resave: false,
     saveUninitialized: false,
     cookie: {
