@@ -1,7 +1,10 @@
-// Accounts' Schemas
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/** 
+ * This schema will be used for stocking user in database
+ * @schema : Account
+ */
 const AccountSchema = new Schema (
 {
 	username : String,
@@ -17,7 +20,7 @@ const AccountSchema = new Schema (
 });
 
 
-
+// export module
 module.exports = {
 	Account : mongoose.model('Account', AccountSchema),
 };
