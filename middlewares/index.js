@@ -38,7 +38,18 @@ const isExistingEmail = (req, res, next) => {
     });
 }
 
-  module.exports.isConnected = isConnected;
-  module.exports.isExistingUser = isExistingUser;
-  module.exports.isExistingEmail = isExistingEmail;
+// check if session is activate
+const checksession = (req, res, next) => {
+    console.log(req.session);
+    if(req.session){
+        next()
+    }else{
+        res.send('ERROR: Session is missing')
+    }
+}
+
+module.exports.isConnected = isConnected;
+module.exports.isExistingUser = isExistingUser;
+module.exports.isExistingEmail = isExistingEmail;
+module.exports.checksession = checksession;
 

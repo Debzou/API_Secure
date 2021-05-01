@@ -5,6 +5,7 @@
 // false --> user is not connected
 // ##########################
 const crypto = require('crypto');
+const Models = require('../models');
 
 // sign up a new person
 const signUpPerson = (req, res) => {
@@ -13,7 +14,7 @@ const signUpPerson = (req, res) => {
     const password = crypto.createHash('sha256').update(req.body.password).digest("hex");
 
     // create the model
-    const Models = require('../models');
+    
     const newAccount = Models.Account ({
         username: req.body.username.toLowerCase(),
         password : password,
@@ -36,7 +37,6 @@ const logInPerson = (req, res) => {
 
     // hash password
     let passwordToCheck = crypto.createHash('sha256').update(password).digest("hex");
-    const Models = require('../models');
 
     //Find user's username and password
     Models.Account.find({username : login.toLowerCase(), password : passwordToCheck},(err,result) => {
@@ -73,11 +73,45 @@ const isConnected = (req,res) => {
     }
 }
 
+// Views
+
+// Home page
+function goToHome(req, res) {
+    res.render('home', {session : req.session});
+}
+
+// Signup page
+function goToSignUp(req, res) {
+    // If the person is already logged in we redirect him to the home page
+    if (req.session.username) {
+        res.redirect('/home');
+        // Else he can sign in
+    } else {
+        res.render('signup', {session : req.session});
+    }
+}
+
+// Login page
+function goToLogIn(req, res) {
+    // If the person is already logged in we redirect him to the home page
+    if (req.session.username) {
+        res.redirect('/home');
+        // Else he can log in
+    } else {
+        res.render('login', {session : req.session});
+    }
+}
 
 
 // export function
 
+// API controllers
 module.exports.signUpPerson = signUpPerson;
 module.exports.logInPerson = logInPerson;
 module.exports.logOut = logOut;
 module.exports.isConnected = isConnected;
+
+// API views
+module.exports.goToLogIn = goToLogIn;
+module.exports.goToHome = goToHome;
+module.exports.goToSignUp = goToSignUp;

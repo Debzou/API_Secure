@@ -9,7 +9,7 @@ router.post('/signup', middleware.isExistingUser,  middleware.isExistingEmail,  
 
 // Basic auth http
 // cf --> req.headers.authorization
-router.get('/login',(req,res)=>{
+router.post('/login',middleware.checksession ,(req,res)=>{
     controller.logInPerson(req,res);
 });
 
@@ -26,6 +26,23 @@ router.get('/isConnected',(req,res) => {
 // Hello world
 router.get('/',(req,res)=>{
     res.end("welcome in API")
+});
+
+// Views
+
+// homePage
+router.get('/homePage',(req,res)=>{
+    controller.goToHome(req,res);
+});
+
+// Sign up page
+router.get('/signupPage',(req,res)=>{
+    controller.goToSignUp(req,res);
+});
+
+// Log in page
+router.get('/loginPage',(req,res)=>{
+    controller.goToLogIn(req,res);
 });
 
 

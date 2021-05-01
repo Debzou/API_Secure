@@ -16,6 +16,9 @@ const redisStore = require('connect-redis')(session);
 const client = redis.createClient();
 const cors = require('cors');
 
+// using for view
+const path = require('path');
+
 // Parser 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
@@ -30,13 +33,13 @@ app.use(session({
 })); 
 
 // Add cors
-eapp.use(cors({
+app.use(cors({
     origin:[`http://localhost:${process.env.PORT}`],
     methods:['GET','POST'],
     credentials: true // enable set cookie
 }));
 
-// Listen port 3001
+// Listen port 
 // API
 app.listen(process.env.PORT_API,(err)=>{
     if (err)
@@ -57,4 +60,9 @@ mongoose.connect(process.env.URL_MONGO, options ,(err)=> {
         throw err;
     console.log('Connect to the database');
 });
+
+// Path and Views
+const dirViews = [path.join(__dirname,'./views')];
+app.set('views',dirViews);
+app.set('view engine','ejs');
 
