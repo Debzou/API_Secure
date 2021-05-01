@@ -84,6 +84,5 @@ const proveAnthentication = (req,res) => {
 // API controllers
 module.exports.signUpPerson = signUpPerson;
 module.exports.logInPerson = logInPerson;
-module.exports.logOut = logOut;
 module.exports.proveAnthentication = proveAnthentication;
 
