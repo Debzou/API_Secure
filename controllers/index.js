@@ -14,7 +14,7 @@ require('dotenv').config();
  * @return jwt genreate with userId and API-KEY
  */
 function generateAccessToken(username) {
-    return jwt.sign(username, process.env.API_TOKEN, { expiresIn: '70s' });
+    return jwt.sign(username, process.env.API_TOKEN, { expiresIn: process.env.TIME_JWT });
 }
 
 
