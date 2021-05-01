@@ -13,7 +13,7 @@ const authenticateToken = (req, res, next) => {
   
     jwt.verify(token, process.env.API_TOKEN, (err, user) => {
       if (err) return res.sendStatus(403)
-      req.userID = userID
+      req.userID = user
       next()
     })
 }
@@ -60,10 +60,19 @@ const isExistingEmail = (req, res, next) => {
     }
 }
 
+const securingUsingASession = (req, res, next) => {
+    if(req.session.username){
+        next();
+    }else{
+        res.send('ERROR: Invalid session');
+    }
+}
+
 
 
 
 module.exports.isExistingUser = isExistingUser;
 module.exports.isExistingEmail = isExistingEmail;
 module.exports.authenticateToken = authenticateToken;
+module.exports.securingUsingASession = securingUsingASession;
 

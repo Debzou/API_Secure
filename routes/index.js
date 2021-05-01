@@ -27,7 +27,7 @@ router.get('/login',(req,res)=>{
  * @route /proveAnthentication
  * @get
  */
-router.get('/proveAnthentication',middleware.authenticateToken,(req,res) => {
+router.get('/proveAnthentication',middleware.authenticateToken, middleware.securingUsingASession, (req,res) => {
     controller.proveAnthentication(req, res);
 });
 
@@ -39,6 +39,16 @@ router.get('/proveAnthentication',middleware.authenticateToken,(req,res) => {
  */
 router.get('/',(req,res)=>{
     res.end("welcome in API")
+});
+
+/** 
+ * Remove your session's value
+ * @route logout
+ * @get
+ * 
+ */
+router.get('/logout',(req,res) => {
+    controller.logOut(req, res);
 });
 
 // export module
