@@ -14,7 +14,7 @@ const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 const client = redis.createClient();
-
+const cors = require('cors');
 
 // Parser 
 app.use(express.urlencoded({ extended: true }))
@@ -28,6 +28,13 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 })); 
+
+// Add cors
+eapp.use(cors({
+    origin:[`http://localhost:${process.env.PORT}`],
+    methods:['GET','POST'],
+    credentials: true // enable set cookie
+}));
 
 // Listen port 3001
 // API
