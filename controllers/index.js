@@ -74,10 +74,10 @@ const logInPerson = (req, res) => {
 
 /** 
  * Check if Account exists in mongoDB
- * @res : json {response:"You are authenticate"}
+ * @res : json {response:"You are authenticated"}
  */
 const proveAnthentication = (req,res) => {
-    res.json({response:"You are authenticate"});
+    res.json({response:"You are authenticated"});
 }
 
 // export function
