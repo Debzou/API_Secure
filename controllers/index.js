@@ -7,7 +7,7 @@ require('dotenv').config();
 
 // This function generate a tokenUser
 function generateAccessToken(username) {
-    return jwt.sign(username, process.env.API_TOKEN, { expiresIn: '1800s' });
+    return jwt.sign(username, process.env.API_TOKEN, { expiresIn: '70s' });
 }
 
 // sign up a new person
