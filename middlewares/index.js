@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const Models = require('../models');
 
+const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const regexUsername = /^[a-zA-Z0-9]+$/
+
 // Check if the user has a good token
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization']
@@ -19,7 +22,7 @@ const authenticateToken = (req, res, next) => {
 const isExistingUser = (req, res, next) => {
    
     // check regex
-    if(/^[a-zA-Z0-9]+$/.test(req.body.username.toLowerCase())){  
+    if(regexUsername.test(req.body.username.toLowerCase())){  
 
         //Check if username exists
         Models.Account.find({username : req.body.username.toLowerCase()}, (err, user) => {
@@ -41,17 +44,20 @@ const isExistingUser = (req, res, next) => {
 
 // Check if email exists
 const isExistingEmail = (req, res, next) => {
-
-    Models.Account.find({email : req.body.email}, (err, user) =>{
-        // check error
-        if (err) throw err;
-        
-        if(user.length !== 0){
-            res.send('ERROR: Email is already taken');
-        }else{
-            next();
-        }
-    });
+    if(regexEmail.test(req.body.email)){ 
+        Models.Account.find({email : req.body.email}, (err, user) =>{
+            // check error
+            if (err) throw err;
+            
+            if(user.length !== 0){
+                res.send('ERROR: Email is already taken');
+            }else{
+                next();
+            }
+        });
+    }else{
+        res.send('ERROR: Invalid regex for email');
+    }
 }
 
 
