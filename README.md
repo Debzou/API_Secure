@@ -28,7 +28,7 @@ localhost:8080/proveAnthentication
 
 ```sh
 curl --location --request GET 'localhost:8080/proveAnthentication' \
---header 'Authorization: Bearer YOUR_TOKEN
+--header 'Authorization: Bearer YOUR_TOKEN'
 --header 'Cookie: connect.sid=YOUR_COOKI'
 ```
 
