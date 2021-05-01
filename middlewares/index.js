@@ -37,9 +37,7 @@ function authenticateToken(req, res, next) {
   if (token == null) return res.sendStatus(401)
 
   jwt.verify(token, process.env.API_TOKEN, (err, user) => {
-    console.log(err)
     if (err) return res.sendStatus(403)
-    console.log(user);
     req.user = user
     next()
   })
