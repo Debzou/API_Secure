@@ -21,7 +21,7 @@ localhost:8080/login
 
 ```sh
 curl --location --request GET 'localhost:8080/login' \
---header 'Authorization: Basic YOUr_AUTH_ENCODED'
+--header 'Authorization: Basic YOUR_AUTH_ENCODED'
 ```
 
 localhost:8080/proveAnthentication
