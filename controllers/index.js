@@ -55,8 +55,8 @@ const logInPerson = (req, res) => {
     const [login, password] = Buffer.from(b64auth, 'base64').toString().split(':');
 
     // session
-    let sess = req.session;
-    sess.username = login
+    req.session.username = login;
+
     // hash password
     let passwordToCheck = crypto.createHash('sha256').update(password).digest("hex");
 
