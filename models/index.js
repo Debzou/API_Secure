@@ -1,8 +1,6 @@
 // Accounts' Schemas
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { v4: uuidv4 } = require('uuid');
-
 
 const AccountSchema = new Schema (
 {
@@ -15,10 +13,6 @@ const AccountSchema = new Schema (
 	createdAt : {
 		type : Date,
 		default : Date.now
-	},
-	token : {
-		type : String,
-		default : uuidv4()
 	}
 });
 

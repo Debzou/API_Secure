@@ -23,11 +23,8 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.3",
-    "redis": "^3.0.2",
-    "uuid": "^7.0.2"
+    "mongoose": "^5.9.3"
   }
 }

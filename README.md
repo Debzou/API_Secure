@@ -1,9 +1,3 @@
-# API_Secure
-web service - nodeJS - JWT - redis
+# Client side :
 
-# TO DO 
-
-- Transform controller functions to async function
-- Add Unit test --> routes
-- Add middlware
-- Add protected routes
+add the token is client side

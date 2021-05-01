@@ -2,7 +2,7 @@ const router = require('express').Router();
 const controller = require('../controllers');
 const middleware = require('../middlewares');
 
-// Sign up page
+// Sign up
 router.post('/signup', middleware.isExistingUser,  middleware.isExistingEmail,  (req,res)=>{
     controller.signUpPerson(req,res);
 });

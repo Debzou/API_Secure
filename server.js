@@ -1,59 +1,44 @@
-// Web service
+// Libray for Web service
 const express = require('express');
 const app = express();
 const routes = require('./routes');
 
-// Env
+// Libray for Env
 require('dotenv').config()
 
-// Mongo database
+// Libray for Mongo database
 const mongoose = require('mongoose');
 
-// redis database
-const session = require('express-session');
-const redis = require('redis');
-const redisStore = require('connect-redis')(session);
-const client = redis.createClient();
+// Libray for Secure API with cors
 const cors = require('cors');
 
-
-
-// Parser 
+// Parser (JSON)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(routes);
 
-// Session
-app.use(session({
-    secret: process.env.SECRET_SESSION,
-    store: new redisStore({host: process.env.REDIS_IP, port: process.env.REDIS_PORT, client: client, ttl: 86400}),
-    saveUninitialized: false,
-    resave: false
-})); 
-
-// Add cors
+// Add cors for the security
 app.use(cors({
     origin:[`http://localhost:${process.env.PORT}`],
     methods:['GET','POST'],
     credentials: true // enable set cookie
 }));
 
-// Listen port 
-// API
+// API Listens port (.ENV)
 app.listen(process.env.PORT_API,(err)=>{
     if (err)
         throw err;    
     console.log(`waiting on localhost:${process.env.PORT_API}`);  
 });
 
-
-// MongoDB
+// MongoDB options
 const options = {
     keepAlive: 1,
     useUnifiedTopology: true,
     useNewUrlParser: true,
 };
 
+// Connect to Mongodb with option define before
 mongoose.connect(process.env.URL_MONGO, options ,(err)=> {
     if (err)
         throw err;
