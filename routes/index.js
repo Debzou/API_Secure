@@ -27,7 +27,7 @@ router.get('/login',(req,res)=>{
  * @route /proveAnthentication
  * @get
  */
-router.get('/proveAnthentication',middleware.authenticateToken,(req,res) => {
+router.get('/proveAnthentication',middleware.authenticateToken, middleware.securingUsingASession, (req,res) => {
     controller.proveAnthentication(req, res);
 });
 

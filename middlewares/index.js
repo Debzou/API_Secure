@@ -60,10 +60,19 @@ const isExistingEmail = (req, res, next) => {
     }
 }
 
+const securingUsingASession = (req, res, next) => {
+    if(req.session){
+        next();
+    }else{
+        res.send('ERROR: Invalid session');
+    }
+}
+
 
 
 
 module.exports.isExistingUser = isExistingUser;
 module.exports.isExistingEmail = isExistingEmail;
 module.exports.authenticateToken = authenticateToken;
+module.exports.securingUsingASession = securingUsingASession;
 
