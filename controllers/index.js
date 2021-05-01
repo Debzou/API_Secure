@@ -83,9 +83,24 @@ const proveAnthentication = (req,res) => {
     res.json({response:"You are authenticated"});
 }
 
+/** 
+ * Destroyed the session 
+ * @res : res.end("Session is destroyed")
+ */
+function logOut(req, res) {
+
+    req.session.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+        res.end("Session is destroyed");
+    });
+}
+
 // export function
 // API controllers
 module.exports.signUpPerson = signUpPerson;
 module.exports.logInPerson = logInPerson;
 module.exports.proveAnthentication = proveAnthentication;
+module.exports.logOut = logOut;
 

@@ -41,5 +41,15 @@ router.get('/',(req,res)=>{
     res.end("welcome in API")
 });
 
+/** 
+ * Remove your session's value
+ * @route logout
+ * @get
+ * 
+ */
+router.get('/logout',(req,res) => {
+    controller.logOut(req, res);
+});
+
 // export module
 module.exports=router;
