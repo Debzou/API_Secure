@@ -38,7 +38,10 @@ const signUpPerson = (req, res) => {
 
     // save the model
     newAccount.save(function(err) {
-        if (err) throw err;
+        if (err) {
+            res.end('error');
+            throw err;
+        }        
         res.end('done');
     });
 }
@@ -62,7 +65,10 @@ const logInPerson = (req, res) => {
 
     //Find user's username and password
     Models.Account.find({username : login.toLowerCase(), password : passwordToCheck},(err,result) => {
-        if (err) throw err;
+        if (err) {
+            res.end('error');
+            throw err;
+        }
         // user exists
         if (result.length == 1) {
             const token = generateAccessToken({ username: result[0]._id });
@@ -90,8 +96,9 @@ const proveAnthentication = (req,res) => {
 function logOut(req, res) {
 
     req.session.destroy((err) => {
-        if(err) {
-            return console.log(err);
+        if (err) {
+            res.end('error');
+            throw err;
         }
         res.end("Session is destroyed");
     });
